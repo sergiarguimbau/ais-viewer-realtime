@@ -15,11 +15,11 @@ services:
       retries: 3
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./backend/postgis/initdb.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
+      - ./docker-init/pgdb-init.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
 
   api:
     build:
-      context: ./backend
+      context: .
     env_file:
       - .env
     environment:
