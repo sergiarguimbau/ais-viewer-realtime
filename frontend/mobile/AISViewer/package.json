@@ -12,6 +12,7 @@
     "lint:fix": "biome check --write ."
   },
   "dependencies": {
+    "@rnmapbox/maps": "10.1.39",
     "react": "19.0.0",
     "react-native": "0.79.2"
   },
