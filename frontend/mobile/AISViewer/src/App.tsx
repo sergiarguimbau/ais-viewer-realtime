@@ -12,6 +12,9 @@ import type { Settings } from "./types";
 
 Mapbox.setAccessToken(Config.MAPBOX_API_KEY);
 
+// Avoids rerendering map when settings change
+const VesselsMapMemo = React.memo(VesselsMap);
+
 export default function App() {
   const mapRef = useRef<Mapbox.MapView>(null);
   const [settings, setSettings] = useState<Settings>({
@@ -26,7 +29,7 @@ export default function App() {
 
   return (
     <View>
-      <VesselsMap mapRef={mapRef} vessels={vessels} />
+      <VesselsMapMemo mapRef={mapRef} vessels={vessels} />
       <SettingsManager settings={settings} setSettings={setSettings} />
       {vessels.length === 0 && <ZoomInMessage />}
     </View>

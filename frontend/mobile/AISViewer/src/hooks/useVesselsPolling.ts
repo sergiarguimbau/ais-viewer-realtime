@@ -18,7 +18,7 @@ export default function useVesselsPolling(
         // Validate minimum zoom to display vessels
         const zoom = await mapRef.current.getZoom();
         if (zoom < minZoom) {
-          setVessels([]);
+          setVessels((prev) => (prev.length === 0 ? prev : []));
           return;
         }
 
@@ -28,7 +28,11 @@ export default function useVesselsPolling(
         const [[west, south], [east, north]] = bounds;
         const bbox = { west, south, east, north };
         const fetchedVessels = await fetchVesselsInBoundingBox(bbox);
-        setVessels(fetchedVessels);
+        setVessels((prev) =>
+          JSON.stringify(prev) === JSON.stringify(fetchedVessels)
+            ? prev
+            : fetchedVessels
+        );
       } catch (error) {
         console.error("getVessels:", error);
       }
